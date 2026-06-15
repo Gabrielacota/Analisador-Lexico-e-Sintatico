@@ -47,7 +47,7 @@ class CompilerErrorLog:
         print("          RELATÓRIO FINAL DO COMPILADOR")
         print("=" * 55)
         if not self.errors and not self.warnings:
-            print("  ✔  Nenhum erro encontrado. Compilação bem-sucedida.")
+            print("  Nenhum erro encontrado. Compilação bem-sucedida.")
         else:
             print(f"  Erros encontrados   : {len(self.errors)}")
             print(f"  Avisos encontrados  : {len(self.warnings)}")
