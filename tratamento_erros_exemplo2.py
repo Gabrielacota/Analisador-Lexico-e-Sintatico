@@ -1,4 +1,4 @@
-# ficheiro: teste_integrante5.py
+# ficheiro: tratamento_erros_exemplo2.py
 from lex import lexer
 from errors import error_log
 
