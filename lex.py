@@ -84,7 +84,7 @@ def t_NUMERO(t):
     return t
 
 # ==========================================
-# 6. Tratamento de Erros (Integrante 5)
+# 6. Tratamento de Erros
 # ==========================================
 # Delega ao módulo errors.py (Washington) que registra o erro,
 # imprime a mensagem e descarta o caractere inválido.
@@ -95,7 +95,7 @@ def t_error(t):
 lexer = lex.lex()
 
 # ==========================================
-# TESTE ISOLADO DO MÓDULO (Para o Integrante 1)
+# TESTE ISOLADO DO MÓDULO
 # ==========================================
 if __name__ == '__main__':
     codigo_teste = """
