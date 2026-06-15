@@ -1,0 +1,71 @@
+// ============================================================
+// exemplo2.ara  —  O Caminho Caótico
+// Teste de Recuperação de Erros
+//
+// Este arquivo contém erros PROPOSITAIS para demonstrar que
+// o compilador AraLang não "quebra" no primeiro problema.
+// Ele deve:
+//   1. Reportar cada erro com número de linha.
+//   2. Continuar a análise após cada falha.
+//   3. Gerar a AST do que sobrou de válido.
+// ============================================================
+
+
+// -----------------------------------------------------------
+// BLOCO 1: Erro Léxico — Caracteres alienígenas
+// O lexer deve pular '@', '#', '$', '?' e continuar.
+// -----------------------------------------------------------
+x = 10@;           // Linha 19: '@' não é um token válido
+y = #5 + 3;        // Linha 20: '#' não é um token válido
+z = x $ y;         // Linha 21: '$' não é um token válido
+
+
+// -----------------------------------------------------------
+// BLOCO 2: Código VÁLIDO após os erros léxicos acima
+// O compilador deve recuperar e processar este bloco normalmente.
+// -----------------------------------------------------------
+x = 10;
+y = 5;
+
+
+// -----------------------------------------------------------
+// BLOCO 3: Erro Sintático — Parêntese sem fechar
+// O parser deve entrar em Panic Mode e avançar até ';'
+// -----------------------------------------------------------
+se (x > y {             // Linha 33: ')' esperado antes de '{'
+    imprima(x);
+}
+
+
+// -----------------------------------------------------------
+// BLOCO 4: Erro Sintático — Operador incompleto
+// Expressão sem lado direito.
+// -----------------------------------------------------------
+x = y +;               // Linha 41: token ';' inesperado após '+'
+
+
+// -----------------------------------------------------------
+// BLOCO 5: Código VÁLIDO — Deve ser compilado com sucesso
+// Demonstra que o compilador se recuperou dos erros anteriores.
+// -----------------------------------------------------------
+x = 1;
+enquanto (x < 5) {
+    x = x + 1;
+}
+
+
+// -----------------------------------------------------------
+// BLOCO 6: Erro Léxico — Mais caracteres inválidos misturados
+// -----------------------------------------------------------
+y = 2 * ?x;            // Linha 55: '?' não é um token válido
+
+
+// -----------------------------------------------------------
+// BLOCO 7: Erro Sintático — Chave de fechamento faltando
+// O bloco 'senao' nunca fecha (EOF inesperado).
+// -----------------------------------------------------------
+se (x == 5) {
+    imprima(x);
+} senao {
+    imprima(y);
+                       // Linha 65: '}' esperado — fim de arquivo inesperado

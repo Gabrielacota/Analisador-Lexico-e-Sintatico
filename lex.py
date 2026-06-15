@@ -1,5 +1,7 @@
 # ficheiro: lex.py
 import ply.lex as lex
+from errors import t_error_handler, error_log
+
 
 # ==========================================
 # 1. Mapeamento de Palavras Reservadas
@@ -82,13 +84,12 @@ def t_NUMERO(t):
     return t
 
 # ==========================================
-# 6. Tratamento de Erros (Fallback)
+# 6. Tratamento de Erros (Integrante 5)
 # ==========================================
-# Implementação mínima para garantir que o lexer roda isoladamente.
-# O Integrante 5 irá expandir esta lógica no ficheiro errors.py.
+# Delega ao módulo errors.py (Washington) que registra o erro,
+# imprime a mensagem e descarta o caractere inválido.
 def t_error(t):
-    print(f"[Aviso Léxico] Caractere não reconhecido '{t.value[0]}' na linha {t.lineno}")
-    t.lexer.skip(1)
+    t_error_handler(t)
 
 # Inicialização do motor léxico
 lexer = lex.lex()
@@ -114,3 +115,5 @@ if __name__ == '__main__':
     
     for tok in lexer:
         print(f"Tipo: {tok.type:<12} | Valor: {tok.value:<10} | Linha: {tok.lineno}")
+
+    error_log.summary()

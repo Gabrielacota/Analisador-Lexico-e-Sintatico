@@ -5,6 +5,7 @@ from ast_nodes import *
 # Importamos os tokens gerados pelo Gabriel no módulo lex.py
 # Isso é essencial para que o yacc reconheça a mesma linguagem
 from lex import tokens
+from errors import sintatico_error_handler, error_log
 
 # ==========================================
 # 1. Precedência de Operadores
@@ -107,15 +108,14 @@ def p_expressao_numero(p):
 def p_expressao_id(p):
     '''expressao : ID'''
     p[0] = IdNode(p[1])
+
 # ==========================================
-# 7. Tratamento de Erros Básico
+# 7. Tratamento de Erros (Integrante 5 - Washington)
 # ==========================================
-# O Washington (Integrante 5) fará a lógica avançada de Panic Mode aqui depois.
+# Delega ao módulo errors.py que implementa o Panic Mode:
+# descarta tokens até encontrar ';' ou '}' e retoma a análise.
 def p_error(p):
-    if p:
-        print(f"[Erro Sintático] Estrutura inválida próximo ao token '{p.value}' na linha {p.lineno}")
-    else:
-        print("[Erro Sintático] Fim de arquivo inesperado. Faltou fechar alguma chave ou parêntese?")
+    sintatico_error_handler(p)
 
 # Inicializa o parser
 parser = yacc.yacc()
@@ -124,10 +124,8 @@ parser = yacc.yacc()
 # TESTE ISOLADO DO MÓDULO (Para você testar)
 # ==========================================
 if __name__ == '__main__':
-    # Importa o motor léxico do Gabriel para rodar junto com o parser
-    from lex import lexer 
-    
-    # Exemplo utilizando as regras do trabalho (se, senao, enquanto)
+    from lex import lexer
+
     codigo_teste = """
     x = 0;
     y = 10;
@@ -139,11 +137,11 @@ if __name__ == '__main__':
         }
     }
     """
-    
+
     print("Iniciando a Análise Sintática...")
     resultado = parser.parse(codigo_teste, lexer=lexer)
-    
+
     print("\n--- ÁRVORE SINTÁTICA EM FORMATO HIERÁRQUICO ---")
     print(resultado.exibir())
-    
-    
+
+    error_log.summary()
