@@ -1,80 +1,171 @@
-# Analisador-Lexico-e-Sintatico - AraLang
+# Analisador Léxico e Sintático - AraLang 🔤
 
-## Detalhamento do Projeto
+Um compilador didático implementando análise léxica e sintática para **AraLang**, uma linguagem procedural estruturada com foco educacional na disciplina de Compiladores.
 
-### Analisador Sintático com AST O.O.
+## 📋 Sobre o Projeto
 
-Este projeto consiste na implementação dos analisadores léxico e sintático para a **AraLang**, uma linguagem procedural didática estruturada em blocos com chaves `{}`. 
+### O que é?
 
-O compilador utiliza a biblioteca `PLY (Python Lex-Yacc)` para realizar a tokenização e a construção de uma Árvore Sintática Abstrata (AST) totalmente representada por estruturas puras de `Orientação a Objetos`, gerando saídas hierárquicas ramificadas no terminal.
+Este projeto implementa um **analisador léxico e sintático** completo para a **AraLang**, uma linguagem procedural didática estruturada em blocos com chaves `{}`. 
 
-## Propósito
+O compilador utiliza a biblioteca **PLY (Python Lex-Yacc)** para realizar:
+- **Tokenização** através de expressões regulares
+- **Construção de AST (Árvore Sintática Abstrata)** em puro Orientação a Objetos
+- **Renderização hierárquica** da árvore no terminal
 
-Este projeto tem como objetivo aplicar, na prática, os conhecimentos adquiridos na disciplina de **Compiladores**, por meio da utilização de ferramentas de análise léxica (Regex), gramáticas livres de contexto (BNF) e mapeamento de árvores sintáticas baseadas em nós operacionais.
+### Propósito
 
-## Estrutura do Projeto
+Aplicar na prática conhecimentos adquiridos na disciplina de **Compiladores**, explorando:
+- Análise léxica com Regex
+- Gramáticas livres de contexto (BNF)
+- Mapeamento de árvores sintáticas com nós operacionais
+- Recuperação de erros em análise léxica e sintática
 
-- `lex.py`: Motor léxico desenvolvido para ler o código-fonte da AraLang, realizar o casamento de padrões via expressões regulares, descartar elementos invisíveis (espaços e comentários) e emitir o fluxo estruturado de tokens.
-- `ast_nodes.py`: Declaração das classes que moldam a Árvore Sintática Abstrata (AST). Implementa a lógica recursiva e o gerenciamento de prefixos para a renderização dos galhos no console.
-- `parser.py`: Ponto de entrada e coração do analisador sintático (Yacc). Valida as regras de produção gramaticais, consome os delimitadores e instancia os objetos da AST. Contém também o script de execução e testes automatizados.
+## 📂 Estrutura do Projeto
 
-## Como Usar
+| Arquivo | Descrição |
+|---------|-----------|
+| `lex.py` | **Motor Léxico**: Lê o código-fonte, realiza casamento de padrões via regex, descarta espaços e comentários, emite fluxo de tokens |
+| `ast_nodes.py` | **Nós da AST**: Classes que moldam a Árvore Sintática Abstrata com lógica recursiva e renderização em console |
+| `parser.py` | **Analisador Sintático (Yacc)**: Valida regras gramaticais, consome delimitadores, instancia objetos da AST |
+| `errors.py` | **Gerenciador de Erros**: Registra e exibe erros léxicos e sintáticos com recuperação inteligente |
+| `main.py` | **Interface Principal**: Script CLI que aceita arquivo `.ara` como entrada e exibe a AST |
+| `teste_erros.py` | **Suite de Testes**: Testes automatizados para validar recuperação de erros |
+| `exemplo1.ara` | **Exemplo Válido**: Implementação da sequência de Fibonacci |
+| `exemplo2.ara` | **Exemplo com Erros**: Demonstração de recuperação de erros léxicos e sintáticos |
+
+## 🚀 Como Usar
 
 ### Pré-requisitos
 
-- **Python 3.x** instalado na máquina.
-- Biblioteca **PLY** (`pip install ply`).
+- **Python 3.8+** instalado na máquina
+- Biblioteca **PLY** 
 
-### Execução
+### Instalação
 
 1. Clone o repositório:
 ```bash
-git clone [https://github.com/Gabrielacota/Analisador-Lexico-e-Sintatico.git](https://github.com/Gabrielacota/Analisador-Lexico-e-Sintatico.git)
-```
-
-2. Acesse o diretório:
-```bash
+git clone https://github.com/Gabrielacota/Analisador-Lexico-e-Sintatico.git
 cd Analisador-Lexico-e-Sintatico
 ```
 
-3. Instale as dependências:
+2. Instale as dependências:
 ```bash
 pip install ply
 ```
 
-4. Execute o analisador sintático:
+### Uso
+
+#### Compilar um arquivo AraLang:
 ```bash
-python parser.py
+python main.py exemplo1.ara
 ```
 
-## Funcionamento
+#### Executar os testes automatizados:
+```bash
+python teste_erros.py
+```
 
-O interpretador recebe uma string de código escrito em AraLang contendo estruturas de repetição (`enquanto`), condicionais (`se`/`senao`), blocos de comandos delimitados e expressões aritméticas.
+## 🔍 Linguagem AraLang
 
-Durante o processamento, caracteres puramente estruturais e delimitadores como `;`, `{`, `}`, `(` e `)` são completamente consumidos e descartados pelo parser, de modo que apenas a verdadeira semântica operacional e as dependências lógicas sejam acopladas e exibidas na árvore de destino.
+### Recursos Suportados
 
-## Exemplo de Código e Saída da AST
+A linguagem AraLang suporta:
 
-O bloco de testes integrado simula um script em AraLang focado em controle de fluxo, contendo um laço de repetição (`enquanto`) com uma condicional aninhada (`se`/`senao`), além de operações matemáticas básicas:
+| Recurso | Descrição | Exemplo |
+|---------|-----------|---------|
+| **Variáveis** | Identificadores de nomes livres | `x = 10;` |
+| **Tipos** | Inteiros e floats | `a = 5; b = 3.14;` |
+| **Operadores Aritméticos** | `+`, `-`, `*`, `/` | `resultado = x + y;` |
+| **Operadores Relacionais** | `<`, `>`, `==`, `!=`, `<=`, `>=` | `se (x > y) {...}` |
+| **Condicionais** | `se` / `senao` | `se (cond) {...} senao {...}` |
+| **Laços** | `enquanto` | `enquanto (cond) {...}` |
+| **Funções Nativas** | `imprima()` | `imprima(x);` |
+| **Blocos** | Delimitados por `{}` | `{ cmd1; cmd2; }` |
+| **Comentários** | `//` para linha | `// comentário` |
 
-### Código-Fonte Simulado:
-```plaintext
-x = 0;
-y = 10;
-enquanto (x < y) {
-    se (x == 5) {
-        imprima(x);
+## 📊 Funcionamento
+
+### Processo de Compilação
+
+1. **Análise Léxica** (`lex.py`)
+   - Lê o código-fonte caractere por caractere
+   - Agrupa em tokens usando expressões regulares
+   - Descarta espaços em branco e comentários
+   - Valida caracteres permitidos
+
+2. **Análise Sintática** (`parser.py`)
+   - Valida a sequência de tokens contra a gramática BNF
+   - Consome delimitadores estruturais (`;`, `{}`, `()`)
+   - Instancia objetos da AST representando a semântica do código
+   - Recupera de erros quando possível
+
+3. **Geração da AST** (`ast_nodes.py`)
+   - Cada construção sintática é um nó (classe) especializado
+   - Nós contêm referências a sub-nós (hierarquia)
+   - Método `exibir()` renderiza a árvore no console com indentação
+
+### Recuperação de Erros
+
+O compilador implementa **recuperação inteligente de erros**:
+- Reporta erros léxicos com linha e caractere problemático
+- Continua tokenização ignorando caracteres inválidos
+- Implementa **Panic Mode** para erros sintáticos
+- Tenta recuperar o parsing após encontrar erro
+- Gera AST parcial do código válido
+
+## 📋 Exemplos
+
+### Exemplo 1: Sequência de Fibonacci
+
+**Arquivo**: `exemplo1.ara`
+```ara
+a = 0;
+b = 1;
+contador = 0;
+limite = 10;
+
+enquanto (contador < limite) {
+    se (contador == 0) {
+        imprima(a);
     } senao {
-        x = x + 1;
+        se (contador == 1) {
+            imprima(b);
+        } senao {
+            proximo = a + b;
+            imprima(proximo);
+            a = b;
+            b = proximo;
+        }
     }
+    contador = contador + 1;
 }
 ```
 
-### Saída Gerada no Terminal (AST):
-```plaintext
-Iniciando a Análise Sintática...
+**Execução**:
+```bash
+python main.py exemplo1.ara
+```
 
---- ÁRVORE SINTÁTICA DA ARALANG ---
+### Exemplo 2: Teste de Recuperação de Erros
+
+**Arquivo**: `exemplo2.ara`
+Contém erros intencionais para demonstrar recuperação:
+- Erros léxicos: caracteres inválidos (`@`, `#`, `$`)
+- Erros sintáticos: parêntese não fechado
+- Expressões incompletas
+
+**Execução**:
+```bash
+python main.py exemplo2.ara
+```
+
+### Saída da AST (Exemplo)
+
+```
+============================================================
+ÁRVORE SINTÁTICA ABSTRATA (AST)
+============================================================
 ProgramaNode
 ├── Assign (=)
 │   ├── Identifier: x
@@ -104,25 +195,60 @@ ProgramaNode
                         └── LiteralInt: 1
 ```
 
-## Infraestrutura
+## 🧪 Testes
 
-O projeto segue princípios de:
+O projeto inclui uma suite de testes automatizados:
 
-- Configuração e execução direta via script principal (`parser.py`).
-- Modularização desacoplada entre Léxico, Sintático e Nós da Árvore.
-- Visualização hierárquica legível por meio de ramificações estruturadas (`├──` e `└──`).
-
-## Tecnologias Utilizadas
-
-`Python`, `PLY (Python Lex-Yacc)`, `Expressões Regulares (Regex)`, `Gramática BNF` e `Orientação a Objetos`.
-
-## Equipe
-
-- **Gabriela Cota**
-- **Rian Carlos**
-- **Mayara Barbosa**
-- **Washington Medeiros**
-- **Gabriel Ferreira Lima**
+```bash
+python teste_erros.py
 ```
 
+Os testes validam:
+- Recuperação de erros léxicos
+- Recuperação de erros sintáticos
+- Geração correta de AST
+- Casos limítrofes (edge cases)
+
+## 🏗️ Arquitetura
+
+### Padrões de Design
+
+- **Modularização**: Separação clara entre léxica, sintática e representação da AST
+- **Orientação a Objetos**: Cada nó da AST é uma classe especializada
+- **Visitante Implícito**: Método `exibir()` em cada nó para renderização
+- **Gerenciamento de Erro Centralizado**: Módulo `errors.py` para tratamento unificado
+
+### Fluxo de Dados
+
 ```
+Código-Fonte (.ara)
+    ↓
+Análise Léxica (lex.py)
+    ↓
+Fluxo de Tokens
+    ↓
+Análise Sintática (parser.py)
+    ↓
+Árvore Sintática Abstrata (ast_nodes.py)
+    ↓
+Renderização no Console
+```
+
+## 📚 Tecnologias
+
+- **Python** 3.8+
+- **PLY (Python Lex-Yacc)** - Gerador de analisadores léxicos e sintáticos
+- **Expressões Regulares (Regex)** - Tokenização
+- **Gramática Livre de Contexto (BNF)** - Especificação sintática
+- **Orientação a Objetos (OO)** - Arquitetura da AST
+
+## 👥 Autores
+
+- **Gabriela Cota** — Coordenação
+- **Rian Carlos** — Desenvolvimento
+- **Mayara Barbosa** — Testes
+- **Washington Medeiros** — Análise
+- **Gabriel Ferreira Lima** — Documentação
+
+
+**Desenvolvido como trabalho prático da disciplina de Compiladores** 🎓

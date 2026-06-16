@@ -107,17 +107,11 @@ def t_error_handler(t):
 #
 def sintatico_error_handler(p):
     """
-    Chamado pelo PLY (yacc) quando a sequência de tokens não obedece
-    à gramática definida nas regras de produção.
-
-    Estratégia: Panic Mode
-      - Se 'p' for None → fim de arquivo inesperado.
-      - Caso contrário → descarta tokens até encontrar um ';' ou '}' (âncoras de
-        recuperação), depois retoma a análise. Isso permite que o compilador
-        reporte múltiplos erros sintáticos em uma única execução.
+    Chamado quando ocorre um erro sintático.
+    Apenas registra o erro e continua.
     """
+
     if p is None:
-        # O parser chegou ao fim do arquivo sem completar uma regra
         error_log.add_error(
             kind="SINTÁTICO",
             message="Fim de arquivo inesperado (estrutura incompleta)",
@@ -131,27 +125,3 @@ def sintatico_error_handler(p):
         line=p.lineno,
         value=str(p.value),
     )
-
-    # --- Panic Mode: descarta tokens até uma âncora de sincronização ---
-    # As âncoras ';' e '}' marcam o fim de instruções/blocos,
-    # pontos seguros a partir dos quais a análise pode ser retomada.
-    ANCHORS = {'PONTOVIRGULA', 'RCHAVE'}
-    while True:
-        tok = p.parser.token()       # Consome o próximo token do lexer
-        if tok is None:              # Fim do arquivo
-            break
-        if tok.type in ANCHORS:
-            break
-
-    p.parser.restart()               # Reinicia o parser no estado inicial
-
-
-# ==========================================
-# 5. Exportações Públicas
-# ==========================================
-__all__ = [
-    "CompilerErrorLog",
-    "error_log",
-    "t_error_handler",
-    "sintatico_error_handler",
-]

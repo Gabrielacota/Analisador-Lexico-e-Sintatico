@@ -1,0 +1,25 @@
+a = 0;
+b = 1;
+contador = 0;
+limite = 10;
+
+enquanto (contador < limite) {
+
+    se (contador == 0) {
+        imprima(a);
+    } senao {
+
+        se (contador == 1) {
+            imprima(b);
+        } senao {
+
+            proximo = a + b;
+            imprima(proximo);
+
+            a = b;
+            b = proximo;
+        }
+    }
+
+    contador = contador + 1;
+}
