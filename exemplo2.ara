@@ -7,7 +7,6 @@
 // Ele deve:
 //   1. Reportar cada erro com número de linha.
 //   2. Continuar a análise após cada falha.
-//   3. Gerar a AST do que sobrou de válido.
 // ============================================================
 
 
@@ -50,7 +49,7 @@ x = y +;               // Linha 41: token ';' inesperado após '+'
 // -----------------------------------------------------------
 x = 1;
 enquanto (x < 5) {
-    x = x + 1;
+    x = x + 1
 }
 
 

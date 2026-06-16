@@ -1,6 +1,4 @@
 # ficheiro: errors.py
-# Integrante 5: Recuperação de Erros Léxicos e Sintáticos (Washington)
-#
 # Este módulo centraliza toda a lógica de tratamento de erros do compilador AraLang.
 # Ele fornece:
 #   1. t_error_handler  → para ser usado no lex.py (erros léxicos)
